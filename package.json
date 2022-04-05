@@ -23,7 +23,9 @@
   "dependencies": {
     "react": "latest",
     "react-dom": "latest",
-    "react-router-dom": "latest"
+    "react-redux": "^7.2.8",
+    "react-router-dom": "latest",
+    "redux": "^4.1.2"
   },
   "browserslist": [
     "last 2 Chrome versions"
