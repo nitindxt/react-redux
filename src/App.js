@@ -5,7 +5,7 @@ import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import Details from "./Details";
 //import ThemeContext from "./ThemeContext";
 import { Provider } from "react-redux";
-import store from "./Store";
+import store from "./store";
 
 const App = () => {
   // const theme = useState("darkblue"); //remove to use reducx provider
