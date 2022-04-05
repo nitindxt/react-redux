@@ -2,7 +2,8 @@ import { Component } from "react";
 import { useParams } from "react-router-dom";
 import Carousel from "./Carousel";
 import ErrorBoundary from "./ErrorBoundary";
-import ThemeContext from "./ThemeContext";
+// import ThemeContext from "./ThemeContext"; // remove for redux's connect
+import { connect, useSelector } from "react-redux";
 import Modal from "./Modal";
 
 class Details extends Component {
@@ -31,16 +32,18 @@ class Details extends Component {
         <div>
           <h1>{name}</h1>
           <h2>{`${animal} — ${breed} — ${city}, ${state}`}</h2>
-          <ThemeContext.Consumer>
-            {([theme]) => (
-              <button
-                onClick={this.toggleModal}
-                style={{ backgroundColor: theme }}
-              >
-                Adopt {name}
-              </button>
-            )}
-          </ThemeContext.Consumer>
+          {/* {<ThemeContext.Consumer>} remove for redux
+            {([theme]) => (*/}
+
+          <button
+            onClick={this.toggleModal}
+            style={{ backgroundColor: this.props.theme }}
+          >
+            {/*earlier backgroundColor: theme */}
+            Adopt {name}
+          </button>
+          {/* )} */}
+          {/* {</ThemeContext.Consumer>} */}
           <p>{description}</p>
           {showModal ? (
             <Modal>
@@ -58,12 +61,24 @@ class Details extends Component {
     );
   }
 }
+//old way of passing props in redux
+const mapStateToProps = ({ theme }) => ({ theme });
+//above func syntax
+/* 
+function(props){
+  return {theme: props.theme}
+}
+*/
+//make a wrapper in redux
+const ReduxWrappedDetails = connect(mapStateToProps)(Details);
+//above API syntax is like connect(mapStateToProps) returns a functin which then is invoked by (Details)... older days of react :)
 
 const WrappedDetails = () => {
   const params = useParams();
+  // const theme = useSelector();
   return (
     <ErrorBoundary>
-      <Details params={params} />
+      <ReduxWrappedDetails params={params} />
     </ErrorBoundary>
   );
 };
